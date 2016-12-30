@@ -1,0 +1,10 @@
+{
+  "main": "home.html",
+  "name": "application-name",
+  "version": "0.0.1",
+  "window": {
+    "title": "node-webkit demo",
+    "icon": "link.png",
+    "toolbar": true
+  }
+}

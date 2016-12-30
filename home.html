@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="tests.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <title>FH-SWF DownloadManager</title>
+</head>
+<body>
+<form>
+    <label for="url">URL</label>
+    <input id="url" name="url" value="http://">
+    <br>
+    <input type="file" nwdirectory  id="save"/>
+    <br>
+    <button type="submit">Cancel</button>
+    <!-- reloading page without return false -->
+    <button id="button" onclick="setOutput();return false;">Click me</button>
+    <br><br>
+    <div id="myProgress">
+        <div id="myBar"></div>
+    </div>
+</form>
+<p id="p1"></p>
+</body>
+</html>
