@@ -13,7 +13,7 @@ function setOutput() {
     var savepath = document.getElementById("save").value;
 
     /**
-     * TODO: Alert Box if non Savepath is set
+     * TODO: Alert Box if non Savepath is set0
      */
 
         //all arguments in array

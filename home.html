@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <title>FH-SWF DownloadManager</title>
 </head>
-<body>
+<body onload="onLoad()">
 <form>
     <label for="url">URL</label>
     <input id="url" name="url" value="http://">
@@ -22,6 +22,9 @@
         <div id="myBar"></div>
     </div>
 </form>
+<br><br>
+<textarea  id="history" rows="4" cols="50">
+</textarea>
 <p id="p1"></p>
 </body>
 </html>

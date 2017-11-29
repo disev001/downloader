@@ -11,11 +11,11 @@
 #      OPTIONS: ---
 # REQUIREMENTS: ---
 #         BUGS: ---
-#        NOTES: LWP installation: perl -MCPAN -e'install "LWP::Simple"' /////////perl -I.. /home/dsee/WebstormProjects/FHDownloader/js/URL-RegexMatching-1.1/lib/URL/RegexMatching.pm
+#        NOTES: ---
 #       AUTHOR: Fabian Schäfer
 # ORGANIZATION: FH Südwestfalen, Iserlohn
 #      VERSION: 0.8
-#      CREATED: 17.04.2016 15:07:30
+#      CREATED: 17.07.2017 15:07:30
 #     REVISION: ---
 #===============================================================================
 
@@ -24,8 +24,11 @@ use warnings;
 use utf8;
 use LWP::Simple;
 use LWP::UserAgent;
-use lib '/home/dsee/WebstormProjects/FHDownloader/js';
+use FindBin;
+use lib $FindBin::Bin;
 use URL::RegexMatching qw(url_match_regex http_url_match_regex);
+
+select(STDOUT); $| =1;
 
 my $url; 														# Variable der Downloadadresse.
 my $savepath; 													# Variable für den Speicherpfad.
@@ -103,7 +106,7 @@ close  $downloadHistory
 
 if ($filesize == $size)		# Prüfung ob die Dateigröße auf der Webseite mit der Dateigröße der heruntergeladenen Datei übereinstimmt ( Download erfolgreich? ).
 {
-print "\nDownload of ".$fileName." completed.\r";				# Erfolgsmeldung bei Übereinstimmung.
+print "\nDownload of ".$fileName." completed.\n";				# Erfolgsmeldung bei Übereinstimmung.
 }
 else															# Fehlermeldung falls nicht.
 {
@@ -126,6 +129,6 @@ sub callback {
 
 sub progress_percent {
 	my ( $got, $total ) = @_;
-	sprintf "%d\r", 100*$got/+$total;
+	sprintf "%.2f%%\r", 100*$got/+$total;
 }
 

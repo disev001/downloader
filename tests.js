@@ -8,7 +8,7 @@
 function setOutput() {
     //parts of script execution command
     var command = "perl";
-    var scriptpath = "/home/dsee/WebstormProjects/FHDownloader/js/script.pl";
+    var scriptpath = "/home/dsee/WebstormProjects/downloader/test.pl";
     var downloadfile = document.getElementById("url").value;
     var savepath = document.getElementById("save").value;
 
@@ -17,13 +17,13 @@ function setOutput() {
      */
 
         //all arguments in array
-    var arg = [scriptpath, downloadfile, savepath];
+    var arg = [scriptpath];
     //execute and write in DOM
-    run(command, arg, function (result) {
-        document.getElementById('p1').innerHTML = result;
-    });
-}
+    console.log("start run");
+    run(command, arg);
 
+    console.log("run end");
+}
 /**
  * Running a shell command with use of child_process spawn
  * and returns it stdout
@@ -35,47 +35,45 @@ function setOutput() {
  * @param callback
  *      callback for use of command output
  */
-function run(cmd, arg, callback) {
+function run(cmd, arg) {
     var spawn = require('child_process').spawn;
-    var command = spawn(cmd, arg);
-    var result ="";
+    var command = spawn(cmd, arg, {detached: true, stdout: 'pipe'});
+    command.stdout.setEncoding('utf8');
+    command.unref();
     var lineBuffer = "";
+    command.stdout.pipe(process.stdout);
     command.stdout.on('data', function (data) {
-        lineBuffer += data.toString();
-        var lines = lineBuffer.split("\n");
+        var lines = (lineBuffer + data).split("\n");
+        if (data[data.length - 1] != '\n') {
+            lineBuffer = lines.pop();
+            console.log(lineBuffer);
+        } else {
+            lineBuffer = '';
+            console.log(lineBuffer);
+            console.log("nothing");
+        }
         for (var i = 0; i < lines.length - 1; i++) {
             var line = lines[i];
             console.log(line);
+            console.log(line);
+
+            console.log("move");
             move(line);
         }
-        lineBuffer = lines[lines.length - 1];
     });
-    console.log("result: " + result);
-    command.on('exit', function (code) {
-        if (code != 0) {
-            console.log('Failed: ' + code);
-            // alert();
-        }
-    });
+}
+function onLoad(){
 
-    command.on('close', function (code) {
-        return callback(result);
-    });
 }
 
 function move(width) {
     var elem = document.getElementById("myBar");
-    var width = 0;
-    var id = setInterval(frame, 10);
-    function frame() {
-        if (width >= 100) {
-            clearInterval(id);
-        } else {
-            width++;
-            elem.style.width = width + '%';
-        }
+    if (elem.style.ladoschksayawidth < width) {
+        elem.style.width = width + '%';
+        console.log(width);
     }
 }
+
 /**
  [dsee@localhost ~]$ perl /home/dsee/WebstormProjects/FHDownloader/js/script2.pl
  http://www.doldrums-gc.de/Themes/Skyfall_v1/images/custom/bg.jpg /home/dsee/Bilder/
